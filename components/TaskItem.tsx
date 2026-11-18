@@ -1,6 +1,78 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import mockData from "@/data/mockData.json";
 import type { Task, StudyStatus } from "@/data/types";
+
+const STORAGE_KEY = "studyflow-tasks-v1";
+const SYNC_EVENT = "studyflow-tasks-sync";
+const defaultTasks = mockData.tasks as Task[];
+let memoryTasks: Task[] = defaultTasks;
+
+export function useTasksState() {
+  const [tasks, setTasks] = useState<Task[]>(defaultTasks);
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as Task[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          memoryTasks = parsed;
+        }
+      }
+    } catch {
+      // Ignore storage read errors
+    }
+    setTasks(memoryTasks);
+
+    const handleSync = () => {
+      setTasks([...memoryTasks]);
+    };
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue) as Task[];
+          if (Array.isArray(parsed)) {
+            memoryTasks = parsed;
+            setTasks([...memoryTasks]);
+          }
+        } catch {
+          // Ignore parse errors
+        }
+      }
+    };
+
+    window.addEventListener(SYNC_EVENT, handleSync);
+    window.addEventListener("storage", handleStorage);
+    return () => {
+      window.removeEventListener(SYNC_EVENT, handleSync);
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, []);
+
+  const toggleTask = useCallback((taskId: string) => {
+    memoryTasks = memoryTasks.map((task) => {
+      if (task.id !== taskId) return task;
+      const nextStatus: StudyStatus =
+        task.status === "완료" ? "진행 중" : "완료";
+      return { ...task, status: nextStatus };
+    });
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(memoryTasks));
+    } catch {
+      // Ignore storage write errors
+    }
+    setTasks([...memoryTasks]);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event(SYNC_EVENT));
+    }
+  }, []);
+
+  return { tasks, toggleTask };
+}
 
 export interface TaskItemProps {
   task: Task;

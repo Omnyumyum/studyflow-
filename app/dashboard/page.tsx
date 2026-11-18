@@ -3,11 +3,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import mockData from "@/data/mockData.json";
-import type { Course, Question, StudyStatus, Task } from "@/data/types";
-import { Card, CourseCard, ProgressBar, TaskItem } from "@/components";
+import type { Course, Question, StudyStatus } from "@/data/types";
+import { Card, CourseCard, ProgressBar, TaskItem, useTasksState } from "@/components";
 
 const courses = mockData.courses as Course[];
-const initialTasks = mockData.tasks as Task[];
 const questions = mockData.questions as Question[];
 
 const FILTER_TABS: Array<"전체" | StudyStatus> = [
@@ -30,7 +29,7 @@ function getStatusBadgeClass(status: StudyStatus): string {
 }
 
 export default function DashboardPage() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const { tasks, toggleTask } = useTasksState();
   const [taskFilter, setTaskFilter] = useState<"전체" | StudyStatus>("전체");
 
   const totalCourses = courses.length;
@@ -68,14 +67,7 @@ export default function DashboardPage() {
       : tasks.filter((task) => task.status === taskFilter);
 
   const handleToggleTask = (taskId: string) => {
-    setTasks((prev) =>
-      prev.map((task) => {
-        if (task.id !== taskId) return task;
-        const nextStatus: StudyStatus =
-          task.status === "완료" ? "진행 중" : "완료";
-        return { ...task, status: nextStatus };
-      })
-    );
+    toggleTask(taskId);
   };
 
   return (
@@ -222,7 +214,11 @@ export default function DashboardPage() {
             }
           >
             {/* 상태 필터 탭 */}
-            <div className="mb-4 flex flex-wrap items-center gap-2">
+            <div
+              className="mb-4 flex flex-wrap items-center gap-2"
+              role="tablist"
+              aria-label="오늘 할 일 상태 필터"
+            >
               {FILTER_TABS.map((tab) => {
                 const isActive = taskFilter === tab;
                 const count =
@@ -233,6 +229,8 @@ export default function DashboardPage() {
                   <button
                     key={tab}
                     type="button"
+                    role="tab"
+                    aria-selected={isActive}
                     onClick={() => setTaskFilter(tab)}
                     className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
                       isActive
@@ -242,7 +240,7 @@ export default function DashboardPage() {
                   >
                     <span>{tab}</span>
                     <span
-                      className={`rounded-full px-1.5 py-0.2 text-[11px] font-extrabold ${
+                      className={`rounded-full px-1.5 py-0.5 text-[11px] font-extrabold ${
                         isActive
                           ? "bg-orange-600 text-white"
                           : "bg-white text-slate-700"
@@ -370,7 +368,7 @@ export default function DashboardPage() {
             </p>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}

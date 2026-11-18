@@ -2,14 +2,14 @@
 
 import React, { useState } from "react";
 import rawData from "@/data/mockData.json";
-import type { MockData, StudyStatus, Task } from "@/data/types";
-import { Card, ProgressBar, TaskItem } from "@/components";
+import type { MockData, StudyStatus } from "@/data/types";
+import { Card, ProgressBar, TaskItem, useTasksState } from "@/components";
 
 const data = rawData as MockData;
 const FILTER_TABS: Array<"전체" | StudyStatus> = ["전체", "시작 전", "진행 중", "완료"];
 
 export default function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>(data.tasks);
+  const { tasks, toggleTask } = useTasksState();
   const [selectedStatus, setSelectedStatus] = useState<"전체" | StudyStatus>("전체");
 
   const totalCount = tasks.length;
@@ -26,14 +26,7 @@ export default function TasksPage() {
       : tasks.filter((task) => task.status === selectedStatus);
 
   const handleToggleTask = (taskId: string) => {
-    setTasks((prev) =>
-      prev.map((task) => {
-        if (task.id !== taskId) return task;
-        const nextStatus: StudyStatus =
-          task.status === "완료" ? "진행 중" : "완료";
-        return { ...task, status: nextStatus };
-      })
-    );
+    toggleTask(taskId);
   };
 
   const getTabCount = (tab: "전체" | StudyStatus): number => {

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import mockData from "@/data/mockData.json";
+import { useTasksState } from "./TaskItem";
 
 interface NavItem {
   label: string;
@@ -14,9 +15,10 @@ interface NavItem {
 
 export function Sidebar() {
   const pathname = usePathname() || "/";
+  const { tasks } = useTasksState();
 
   const inProgressCourses = mockData.courses.filter((c) => c.status === "진행 중").length;
-  const remainingTasks = mockData.tasks.filter((t) => t.status !== "완료").length;
+  const remainingTasks = tasks.filter((t) => t.status !== "완료").length;
   const totalQuestions = mockData.questions.length;
 
   const navItems: NavItem[] = [
