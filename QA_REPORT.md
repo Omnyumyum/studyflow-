@@ -82,3 +82,13 @@
 4. **`DESIGN.md 불일치`**: 6대 공통 컴포넌트, 3색 컬러 토큰(Slate / Coral Orange / Emerald Green), 굵은 숫자(`font-bold`), 빈 화면 문구 3종 모두 100% 일치.
 5. **`console error`**: 하이드레이션 불일치 없음, 전 화면 할 일 상태 동기화 완료, **남은 Critical 이슈 0건**.
 
+
+
+---
+
+## 5. GitHub PR 제출 체크리스트 (3교시 & 12주차 과제 확인)
+
+- [x] **실행 가능한 StudyFlow**: `npm run build` 빌드 에러 0건, Mock Data 기반 전 화면(`/`, `/dashboard`, `/courses`, `/courses/[id]`, `/tasks`, `/questions`) 정상 동작
+- [x] **QA 등급화 리포트**: `Critical` (1건) · `Major` (2건) · `Minor` (2건) 분류 및 수정 후 재검증(남은 Critical 0건) 완료
+- [x] **GitHub 브랜치 및 의미 있는 커밋**: `main`, `feature/ui`, `feature/dashboard`, `feature/courses`, `feature/qa` 원격 푸시 완료
+- [x] **Pull Request Diff Review**: `feature/qa` → `main` PR 생성 및 코드 변경분 검토 준비 완료
