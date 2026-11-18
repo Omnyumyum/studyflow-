@@ -56,6 +56,29 @@
 ---
 
 ## 3. 수정 루프 (Fix Loop) 진행 상태
-- [x] **Step 1 (최초 점검 및 리포트 작성)**: 코드 임의 수정 없이 5대 점검 항목 검증 및 등급화 리포트(`QA_REPORT.md`) 작성 완료
-- [ ] **Step 2 (승인 대기)**: Coordinator 승인 후 `Critical` 및 주요 이슈 수정 진행 예정
-- [ ] **Step 3 (수정 및 재검증)**: 코드 수정 후 `npm run build` 및 `Critical` 이슈 0건 재검증 예정
+- [x] **Step 1 (최초 점검 및 리포트 작성)**: 코드 임의 수정 없이 5대 점검 항목 검증 및 등급화 리포트(`QA_REPORT.md`) 작성 완료 (`675cc26`)
+- [x] **Step 2 (승인 완료)**: Coordinator로부터 Critical 1건 · Major 2건 · Minor 2건 수정 승인 완료
+- [x] **Step 3 (수정 완료)**: 승인된 5건의 QA 이슈 코드 수정 및 커밋 완료 (`fix: resolve QA critical state sync and layout issues`)
+- [x] **Step 4 (재검증 완료)**: `npm run build` 재실행 성공 (에러 0건) 및 남은 `Critical` 이슈 **0건** 최종 확인
+
+---
+
+## 수정 루프 및 재검증 결과 (Fix Loop & Re-verification)
+
+### 1. 이슈별 조치 및 해결 결과
+
+| 등급 | 화면 | 조치 내역 | 최종 상태 |
+| :--- | :--- | :--- | :--- |
+| **Critical** | `Dashboard`, `Tasks`, `CourseDetail`, `Header`, `Sidebar` | `components/TaskItem.tsx`에 공유 상태 훅 `useTasksState`(`localStorage` + `studyflow-tasks-sync` 커스텀 이벤트 기반)를 구현하고 `Header`, `Sidebar`, `DashboardPage`, `TasksPage`, `CourseDetailPage` 전체에 연동하여 할 일 체크박스 토글 시 완료율(`%`), 사이드바 남은 건수 배지, 페이지 간 목록이 실시간 동기화되도록 수정 (`params.id` 변경 시 반응형 필터링 적용) | **Resolved (해결 완료)** |
+| **Major** | `Dashboard` (`app/dashboard/page.tsx`) | 하단 "수강 중인 과목 현황" 그리드를 `grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3`으로 수정하여 `DESIGN.md` 3열 반응형 그리드 기준 충족 | **Resolved (해결 완료)** |
+| **Major** | `Header` (`components/Header.tsx`), `Home` (`app/page.tsx`) | `Header.tsx`에서 `usePathname()`을 사용해 현재 라우트별 페이지 타이틀(대시보드 · 내 강의 · 과목 상세 · 할 일 관리 · 질문방)과 학사 일정을 동적으로 표시하도록 개선하고, `app/page.tsx` 상단 배너의 헤딩 계층 역전(`<h2>` → `<p>`)을 정리 | **Resolved (해결 완료)** |
+| **Minor** | `Dashboard` (`app/dashboard/page.tsx`) | 필터 탭 카운트 배지의 비표준 클래스 `py-0.2`를 표준 Tailwind 유틸리티 클래스 `py-0.5`로 교체 | **Resolved (해결 완료)** |
+| **Minor** | `Dashboard` (`app/dashboard/page.tsx`), `AppShell` (`components/AppShell.tsx`) | `Dashboard` 할 일 필터 탭에 `role="tablist"`, `role="tab"`, `aria-selected` 웹 접근성 속성을 추가하고 `AppShell`의 `main` 패딩을 `p-4 sm:p-6`으로 개선 | **Resolved (해결 완료)** |
+
+### 2. 5대 항목 최종 재검증 요약
+1. **`build error`**: `npm run build` (`next build`) 재실행 통과 — 컴파일 에러 **0건**, TypeScript strict 타입 에러 **0건**.
+2. **`broken link`**: `/`, `/dashboard`, `/courses`, `/courses/[id]`, `/tasks`, `/questions` 전 라우트 정상 연결 확인.
+3. **`responsive layout`**: 데스크톱 `240px` 고정 사이드바, `64px` 고정 헤더, 모바일 상단 네비게이션 및 `lg:grid-cols-3` 과목 카드 그리드 정상 동작 확인.
+4. **`DESIGN.md 불일치`**: 6대 공통 컴포넌트, 3색 컬러 토큰(Slate / Coral Orange / Emerald Green), 굵은 숫자(`font-bold`), 빈 화면 문구 3종 모두 100% 일치.
+5. **`console error`**: 하이드레이션 불일치 없음, 전 화면 할 일 상태 동기화 완료, **남은 Critical 이슈 0건**.
+
