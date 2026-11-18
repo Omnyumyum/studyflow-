@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AppShell } from "@/components/AppShell";
 
 export const metadata: Metadata = {
   title: "StudyFlow — 대학생 학습관리 웹앱",
@@ -14,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
-        {children}
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
