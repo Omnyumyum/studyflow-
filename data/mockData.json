@@ -1,0 +1,151 @@
+{
+  "courses": [
+    {
+      "id": "cs-101",
+      "title": "멀티 에이전트 시스템 설계",
+      "instructor": "김지훈 교수",
+      "category": "전공필수 · AI",
+      "progress": 75,
+      "completedLessons": 9,
+      "totalLessons": 12,
+      "status": "진행 중",
+      "nextDeadline": "2026-11-20",
+      "description": "DESIGN.md 기반의 Single Source of Truth 설계부터 Git Worktree 병렬 에이전트 협업 및 QA 루프까지 학습합니다.",
+      "lessons": [
+        { "week": 10, "title": "Stitch 프로토타입과 DESIGN.md 작성", "duration": "48분", "status": "완료" },
+        { "week": 11, "title": "Git Worktree와 에이전트 역할 분리", "duration": "52분", "status": "완료" },
+        { "week": 12, "title": "Antigravity Multi-Agent 병렬 개발 및 QA", "duration": "50분", "status": "진행 중" },
+        { "week": 13, "title": "GitHub MCP · CI Actions · Vercel 자동 배포", "duration": "45분", "status": "시작 전" }
+      ]
+    },
+    {
+      "id": "web-202",
+      "title": "모던 웹 아키텍처 (Next.js & Tailwind)",
+      "instructor": "이수연 교수",
+      "category": "전공선택 · 웹공학",
+      "progress": 100,
+      "completedLessons": 12,
+      "totalLessons": 12,
+      "status": "완료",
+      "nextDeadline": "완료됨",
+      "description": "App Router 기반 서버/클라이언트 컴포넌트 분리와 반응형 디자인 토큰 시스템을 구축합니다.",
+      "lessons": [
+        { "week": 1, "title": "App Router 라우팅 및 레이아웃 시스템", "duration": "45분", "status": "완료" },
+        { "week": 2, "title": "Tailwind CSS 디자인 토큰 및 반응형 그리드", "duration": "50분", "status": "완료" },
+        { "week": 3, "title": "공통 UI 컴포넌트(Card, ProgressBar) 모듈화", "duration": "40분", "status": "완료" }
+      ]
+    },
+    {
+      "id": "algo-301",
+      "title": "자료구조와 그래프 알고리즘",
+      "instructor": "박현우 교수",
+      "category": "전공필수 · CS",
+      "progress": 42,
+      "completedLessons": 5,
+      "totalLessons": 12,
+      "status": "진행 중",
+      "nextDeadline": "2026-11-22",
+      "description": "트리, 그래프 탐색(BFS/DFS), 최단 경로 및 위상 정렬(의존성 순서 제어)을 실습합니다.",
+      "lessons": [
+        { "week": 4, "title": "이진 탐색 트리와 힙(Heap)", "duration": "55분", "status": "완료" },
+        { "week": 5, "title": "DAG와 위상 정렬 (의존성 그래프)", "duration": "50분", "status": "진행 중" },
+        { "week": 6, "title": "다익스트라 최단 경로 알고리즘", "duration": "60분", "status": "시작 전" }
+      ]
+    },
+    {
+      "id": "db-204",
+      "title": "데이터베이스 시스템 및 SQL 최적화",
+      "instructor": "최윤정 교수",
+      "category": "전공선택 · 데이터",
+      "progress": 0,
+      "completedLessons": 0,
+      "totalLessons": 12,
+      "status": "시작 전",
+      "nextDeadline": "2026-11-25",
+      "description": "정규화, 인덱스 설계, 트랜잭션 격리 수준과 실행 계획 분석을 다룹니다.",
+      "lessons": [
+        { "week": 1, "title": "관계형 데이터 모델과 정규화", "duration": "45분", "status": "시작 전" },
+        { "week": 2, "title": "B-Tree 인덱스와 쿼리 튜닝", "duration": "50분", "status": "시작 전" }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-1",
+      "courseId": "cs-101",
+      "courseTitle": "멀티 에이전트 시스템 설계",
+      "title": "12주차 실습: Worktree 4개 생성 및 agent_role.md 작성",
+      "dueDate": "2026-11-18",
+      "status": "완료",
+      "priority": "높음"
+    },
+    {
+      "id": "task-2",
+      "courseId": "cs-101",
+      "courseTitle": "멀티 에이전트 시스템 설계",
+      "title": "QA 등급화(Critical·Major·Minor) 리포트 제출 및 PR 생성",
+      "dueDate": "2026-11-20",
+      "status": "진행 중",
+      "priority": "높음"
+    },
+    {
+      "id": "task-3",
+      "courseId": "algo-301",
+      "courseTitle": "자료구조와 그래프 알고리즘",
+      "title": "위상 정렬(Topological Sort) 기반 의존성 스케줄러 구현 과제",
+      "dueDate": "2026-11-22",
+      "status": "진행 중",
+      "priority": "보통"
+    },
+    {
+      "id": "task-4",
+      "courseId": "db-204",
+      "courseTitle": "데이터베이스 시스템 및 SQL 최적화",
+      "title": "ERD 스키마 초안 작성 및 테이블 정의서 제출",
+      "dueDate": "2026-11-25",
+      "status": "시작 전",
+      "priority": "보통"
+    },
+    {
+      "id": "task-5",
+      "courseId": "web-202",
+      "courseTitle": "모던 웹 아키텍처 (Next.js & Tailwind)",
+      "title": "DESIGN.md 기반 공통 컴포넌트(CourseCard, ProgressBar) 구현",
+      "dueDate": "2026-11-17",
+      "status": "완료",
+      "priority": "낮음"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q-1",
+      "courseId": "cs-101",
+      "courseTitle": "멀티 에이전트 시스템 설계",
+      "title": "Agent B와 Agent C를 동시에 실행할 때 왜 Agent A가 먼저 끝나야 하나요?",
+      "author": "김민준 (학부 3학년)",
+      "createdAt": "2026-11-18",
+      "status": "완료",
+      "answerSummary": "Agent B(Dashboard)와 Agent C(Courses)가 모두 Agent A의 공통 UI 컴포넌트(Header, Sidebar, Card 등)를 import하므로, Agent A가 먼저 완료되어야 충돌 없이 재사용할 수 있습니다."
+    },
+    {
+      "id": "q-2",
+      "courseId": "cs-101",
+      "courseTitle": "멀티 에이전트 시스템 설계",
+      "title": "QA Agent에게 바로 코드를 고치지 말고 리포트부터 출력하라고 하는 이유는 무엇인가요?",
+      "author": "이하은 (학부 4학년)",
+      "createdAt": "2026-11-18",
+      "status": "진행 중",
+      "answerSummary": "사람(Human-in-the-loop)이 Critical·Major·Minor 등급표를 먼저 검토하고 수정 범위를 확정(승인)해야 의도치 않은 코드 파손을 막을 수 있기 때문입니다."
+    },
+    {
+      "id": "q-3",
+      "courseId": "algo-301",
+      "courseTitle": "자료구조와 그래프 알고리즘",
+      "title": "사이클이 있는 그래프에서 진입 차수(in-degree)가 0인 노드가 없을 때 처리 방법 질문드립니다.",
+      "author": "박서준 (학부 2학년)",
+      "createdAt": "2026-11-17",
+      "status": "시작 전",
+      "answerSummary": "교수님 또는 조교 답변 대기 중입니다."
+    }
+  ]
+}
