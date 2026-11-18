@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import rawData from "@/data/mockData.json";
-import type { MockData, StudyStatus, Task } from "@/data/types";
-import { Card, ProgressBar, TaskItem } from "@/components";
+import type { MockData, StudyStatus } from "@/data/types";
+import { Card, ProgressBar, TaskItem, useTasksState } from "@/components";
 
 const data = rawData as MockData;
 
@@ -26,24 +26,15 @@ export default function CourseDetailPage({
   params: { id: string };
 }) {
   const course = data.courses.find((item) => item.id === params.id);
-
-  const [courseTasks, setCourseTasks] = useState<Task[]>(() =>
-    data.tasks.filter((task) => task.courseId === params.id)
-  );
+  const { tasks, toggleTask } = useTasksState();
+  const courseTasks = tasks.filter((task) => task.courseId === params.id);
 
   const courseQuestions = data.questions.filter(
     (question) => question.courseId === params.id
   );
 
   const handleToggleTask = (taskId: string) => {
-    setCourseTasks((prev) =>
-      prev.map((task) => {
-        if (task.id !== taskId) return task;
-        const nextStatus: StudyStatus =
-          task.status === "완료" ? "진행 중" : "완료";
-        return { ...task, status: nextStatus };
-      })
-    );
+    toggleTask(taskId);
   };
 
   if (!course) {

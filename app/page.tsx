@@ -12,9 +12,9 @@ export default function HomePage() {
             <span className="inline-flex items-center rounded-full bg-orange-600 px-2.5 py-0.5 text-xs font-bold text-white">
               StudyFlow Home
             </span>
-            <h2 className="mt-2 text-lg font-extrabold tracking-tight text-white">
+            <p className="mt-2 text-lg font-extrabold tracking-tight text-white">
               오늘의 강의 진도와 과제를 놓치지 마세요
-            </h2>
+            </p>
             <p className="mt-1 text-xs text-slate-300">
               수강 과목 진행률, 오늘 할 일, 질문방 답변 상태를 한 화면에서 확인합니다.
             </p>

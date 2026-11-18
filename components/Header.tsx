@@ -1,5 +1,9 @@
+"use client";
+
 import React from "react";
+import { usePathname } from "next/navigation";
 import mockData from "@/data/mockData.json";
+import { useTasksState } from "./TaskItem";
 
 export interface HeaderProps {
   title?: string;
@@ -7,15 +11,37 @@ export interface HeaderProps {
   completionRate?: number;
 }
 
+function getPageTitleByPath(pathname: string): string {
+  if (pathname === "/" || pathname === "/dashboard") {
+    return "대시보드 · 2026학년도 2학기 12주차";
+  }
+  if (pathname.startsWith("/courses/")) {
+    return "과목 상세 · 2026학년도 2학기 12주차";
+  }
+  if (pathname === "/courses") {
+    return "내 강의 · 2026학년도 2학기 12주차";
+  }
+  if (pathname === "/tasks") {
+    return "할 일 관리 · 2026학년도 2학기 12주차";
+  }
+  if (pathname === "/questions") {
+    return "질문방 · 2026학년도 2학기 12주차";
+  }
+  return "2026학년도 2학기 · 12주차 학습 현황";
+}
+
 export function Header({
-  title = "2026학년도 2학기 · 12주차 학습 현황",
+  title,
   subtitle = "오늘도 목표한 학습 분량을 달성해 보세요.",
   completionRate,
 }: HeaderProps) {
-  const totalTasks = mockData.tasks.length;
-  const completedTasks = mockData.tasks.filter((t) => t.status === "완료").length;
+  const pathname = usePathname() || "/";
+  const { tasks } = useTasksState();
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter((t) => t.status === "완료").length;
   const computedRate =
     completionRate ?? (totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0);
+  const resolvedTitle = title ?? getPageTitleByPath(pathname);
 
   return (
     <header className="sticky top-0 z-20 flex h-[64px] w-full items-center justify-between border-b border-slate-200 bg-white px-6">
@@ -24,7 +50,7 @@ export function Header({
           진행 중 · 12주차
         </span>
         <div className="truncate">
-          <p className="truncate text-sm font-bold text-slate-900">{title}</p>
+          <p className="truncate text-sm font-bold text-slate-900">{resolvedTitle}</p>
           <p className="hidden truncate text-xs text-slate-500 sm:block">{subtitle}</p>
         </div>
       </div>
